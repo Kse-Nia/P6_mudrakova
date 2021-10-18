@@ -123,3 +123,10 @@ exports.getAllSauce = (req, res, next) => {
         }
     );
 };
+
+exports.likedSauce = (req, res, next) =>{
+    let like = req.body.like;
+    let userId = req.body.userId;
+    let sauceID = req.params.id
+
+};
