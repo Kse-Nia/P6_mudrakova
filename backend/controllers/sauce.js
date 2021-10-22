@@ -48,10 +48,12 @@ exports.getOneSauce = (req, res, next) => {
         _id: req.params.id
     }).then(
         (sauce) => {
+            console.log("sauce");
             res.status(200).json(sauce);
         }
     ).catch(
         (error) => {
+            console.log("sauce non trouvé");
             res.status(404).json({
                 error: error
             });
@@ -124,7 +126,7 @@ exports.getAllSauce = (req, res, next) => {
     );
 };
 
-exports.likedSauce = (req, res, next) =>{
+exports.likedSauce = (req, res, next) => {
     let like = req.body.like;
     let userId = req.body.userId;
     let sauceID = req.params.id
