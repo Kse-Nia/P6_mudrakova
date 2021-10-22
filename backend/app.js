@@ -1,7 +1,7 @@
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
 
@@ -14,9 +14,7 @@ mongoose.connect('mongodb+srv://ksenia:nrppgt@cluster0.tlcbj.mongodb.net/Project
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-
 const app = express();
-//app.use(helmet());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -27,11 +25,18 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.use('/api/sauces', sauceRoutes);
+// Express-rate-limit
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 200 // limit each IP to 100 requests per windowMs
+});
+
+app.use(limiter);
 
 app.use(bodyParser.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/api/auth', userRoutes);
-app.use('/api/sauces', sauceRoutes);
+app.use('/api/auth', userRoutes, limiter);
+app.use('/api/sauces', sauceRoutes, limiter);
 
 module.exports = app;
