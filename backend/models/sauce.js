@@ -43,7 +43,7 @@ const sauceSchema = mongoose.Schema({
     },
     usersDisliked: {
         type: [String],
-        default: 0
+        required: false
     }
 });
 
