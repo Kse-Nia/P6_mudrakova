@@ -58,26 +58,6 @@ exports.modifySauce = (req, res, next) => {
         );
 };
 
-/*
-exports.deleteSauce = (req, res, next) => {
-    Sauce.deleteOne({
-        _id: req.params.id
-    }).then(
-        () => {
-            res.status(200).json({
-                message: 'Supprimée !'
-            });
-        }
-    ).catch(
-        (error) => {
-            res.status(400).json({
-                error: error
-            });
-        }
-    );
-};
-
-*/
 
 exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({
@@ -117,17 +97,20 @@ exports.getAllSauce = (req, res, next) => {
     );
 };
 
+/* 
 exports.likedSauce = (req, res, next) => {
     let like = req.body.like;
     let userId = req.body.userId;
     let sauceID = req.params.id
 
 };
+*/
 
 // Like and Dislike part
 
 exports.likeDislike = (req, res, next) => {
-    /* 
+    let like = req.body.like;
+
     if (like === 1) {
         Sauce.updateOne({
                 id: req.params.id
@@ -211,5 +194,4 @@ exports.likeDislike = (req, res, next) => {
                 error
             }))
     }
-    */
 }
