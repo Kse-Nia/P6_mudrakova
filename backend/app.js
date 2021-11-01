@@ -7,15 +7,14 @@ const sauceRoutes = require('./routes/sauce');
 
 const path = require('path');
 
+const app = express();
+
 mongoose.connect('mongodb+srv://ksenia:nrppgt@cluster0.tlcbj.mongodb.net/Project6?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
-
-
-const app = express();
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,10 +23,8 @@ app.use((req, res, next) => {
     next();
 });
 
-
-app.use(express.json());
-
 app.use(bodyParser.json());
+app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', userRoutes);
