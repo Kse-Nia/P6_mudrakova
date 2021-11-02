@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 
 const userRoutes = require('./routes/user');
 const sauceRoute = require('./routes/sauce');
-
+const path = require('path');
 
 mongoose.connect('mongodb+srv://ksenia:nrppgt@cluster0.tlcbj.mongodb.net/Project6?retryWrites=true&w=majority', {
         useNewUrlParser: true,
@@ -25,16 +25,12 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-//app.use('/images', express.static(path.join(__dirname, 'images')))
+app.use('/images', express.static(path.join(__dirname, 'images')))
 
 
 app.use(bodyParser.json());
 
-app.use((req, res) => {
-    res.json({
-        message: 'Votre requête a bien été reçue !'
-    });
-});
+
 
 app.use('/api/auth', userRoutes);
 app.use('/api/sauces', sauceRoute);
