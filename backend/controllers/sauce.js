@@ -1,6 +1,5 @@
 const Sauce = require('../models/sauce');
 const fs = require('fs');
-const sauce = require('../models/sauce');
 
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
@@ -24,12 +23,10 @@ exports.getOneSauce = (req, res, next) => {
         _id: req.params.id
     }).then(
         (sauce) => {
-            console.log("sauce");
             res.status(200).json(sauce);
         }
     ).catch(
         (error) => {
-            console.log("sauce non trouvé");
             res.status(404).json({
                 error: error
             });
@@ -72,7 +69,7 @@ exports.deleteSauce = (req, res, next) => {
                         _id: req.params.id
                     })
                     .then(() => res.status(200).json({
-                        message: 'Sauce supprimée !'
+                        message: 'Sauce supprimée'
                     }))
                     .catch(error => res.status(400).json({
                         error
@@ -83,6 +80,7 @@ exports.deleteSauce = (req, res, next) => {
             error
         }));
 };
+
 
 exports.getAllSauce = (req, res, next) => {
     Sauce.find().then(
@@ -97,6 +95,7 @@ exports.getAllSauce = (req, res, next) => {
         }
     );
 };
+
 
 // Like and Dislike part
 
@@ -197,5 +196,4 @@ exports.likeDislike = (req, res, next) => {
         default:
             console.log(error);
     }
-
 }
