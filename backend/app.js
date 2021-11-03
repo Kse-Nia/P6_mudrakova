@@ -2,20 +2,32 @@ const express = require('express');
 const helmet = require("helmet");
 const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
+
+/// Config dotenv
+require('dotenv').config();
+
+require('dotenv').config({
+    path: 'backend/.env'
+});
+process.env.SECRET_MONGO;
+///
+
 const bodyParser = require('body-parser');
+const path = require('path');
+
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
 
-const path = require('path');
+mongoose
+    .connect(
+        process.env.SECRET_MONGO, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }
+    )
+    .then(() => console.log("Connexion à MongoDB réussie !"))
+    .catch(() => console.log("Connexion à MongoDB échouée !"));
 
-//const app = express();
-
-mongoose.connect('mongodb+srv://ksenia:nrppgt@cluster0.tlcbj.mongodb.net/Project6?retryWrites=true&w=majority', {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-    .then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
 app.use(helmet());
